@@ -125,3 +125,48 @@ PostModel.init(
   },
   { sequelize, tableName: StringsDB.postTableName, timestamps: true }
 );
+
+UserModel.belongsToMany(CarModel, {
+  through: StringsDB.favoriteCarTableName,
+  foreignKey: StringsDB.userForeignKeyName,
+});
+CarModel.belongsToMany(UserModel, {
+  through: StringsDB.favoriteCarTableName,
+  foreignKey: StringsDB.carForeignKeyName,
+});
+
+UserModel.belongsToMany(UserModel, {
+  through: StringsDB.friendsTableName,
+  foreignKey: StringsDB.userForeignKeyName,
+  as: "user",
+});
+
+UserModel.belongsToMany(UserModel, {
+  through: StringsDB.friendsTableName,
+  foreignKey: StringsDB.friendForeignKeyName,
+  as: "friend",
+});
+
+CarModel.belongsToMany(MultimediaModel, {
+  through: StringsDB.CarMultimediaTableName,
+  foreignKey: StringsDB.carForeignKeyName,
+});
+MultimediaModel.belongsToMany(CarModel, {
+  through: StringsDB.CarMultimediaTableName,
+  foreignKey: StringsDB.multimediaForeignKeyName,
+});
+
+PostModel.belongsToMany(MultimediaModel, {
+  through: StringsDB.postMultimediaTableName,
+  foreignKey: StringsDB.postForeignKeyName,
+});
+MultimediaModel.belongsToMany(PostModel, {
+  through: StringsDB.postMultimediaTableName,
+  foreignKey: StringsDB.multimediaForeignKeyName,
+});
+
+PostTypeModel.hasMany(PostModel, {foreignKey: StringsDB.postTypeForeignKeyName});
+PostModel.belongsTo(PostTypeModel, {foreignKey: StringsDB.postTypeForeignKeyName});
+
+UserModel.hasMany(PostModel, {foreignKey: StringsDB.userForeignKeyName});
+PostModel.belongsTo(UserModel, {foreignKey: StringsDB.userForeignKeyName});

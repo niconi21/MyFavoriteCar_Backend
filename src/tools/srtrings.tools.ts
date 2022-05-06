@@ -19,4 +19,15 @@ export class StringsDB{
   public static postTableName = 'Post';
   public static postTypeTableName = 'PostType';
   public static multimediaTableName = 'Multimedia';
+  public static favoriteCarTableName = "FavoriteCar";
+  public static friendsTableName = "Friends";
+  public static CarMultimediaTableName = "CarMultimedia";
+  public static postMultimediaTableName = "PostMultimedia";
+
+  public static userForeignKeyName = 'userId';
+  public static friendForeignKeyName = 'friendId';
+  public static carForeignKeyName = 'carId';
+  public static multimediaForeignKeyName = 'multimediaId';
+  public static postForeignKeyName = 'postId';
+  public static postTypeForeignKeyName = 'typeId';
 }
