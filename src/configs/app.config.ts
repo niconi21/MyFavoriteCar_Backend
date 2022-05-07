@@ -9,7 +9,7 @@ import { StringsApp } from "../tools/srtrings.tools";
 import { sequelize } from "./app.database";
 import { UserModel } from "../schemas/user.schema";
 import { CarModel } from "../schemas/car.schema";
-import { PostModel } from '../schemas/post.schema';
+import { PostModel } from "../schemas/post.schema";
 export class App {
   private _app: Application;
   private _port: string = APP_ENVIROMENTS.port;
@@ -44,22 +44,9 @@ export class App {
       await sequelize.authenticate();
       await sequelize.sync({ force: true, logging: false });
       console.log(magenta(StringsApp.dbMessageConnected));
-      await this._prubasDB();
     } catch (error) {
       console.log(error);
     }
-  }
-
-  private async _prubasDB() {
-    // await CarModel.create({
-    //   name: 'I10',
-    //   tradeMark: 'hyundai',
-    //   model: 2014,
-    //   description:'Liena 4c 1.1L'
-    // })
-    // let post = await PostModel.findByPk(4);
-    // let user = await post?.getType()
-    // console.log(user?.get())
   }
 
   public async listen() {

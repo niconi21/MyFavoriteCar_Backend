@@ -1,5 +1,4 @@
 import { UserModel } from './user.schema';
-import { PostTypeModel } from './postType.schema';
 import {
   BelongsTo,
     BelongsToGetAssociationMixin,
@@ -16,12 +15,13 @@ import {
     public id: CreationOptional<number>;
     public title: string;
     public description: string;
+    public type: string;
     
     public createdAt: CreationOptional<Date>;
     public updatedAt: CreationOptional<Date>;
 
     public getUser!: BelongsToGetAssociationMixin<UserModel>;
-    public getType!: BelongsToGetAssociationMixin<PostTypeModel>;
-
+    
+    
   }
   

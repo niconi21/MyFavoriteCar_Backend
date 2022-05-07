@@ -4,7 +4,6 @@ import { UserModel } from "../schemas/user.schema";
 import { StringsDB } from "../tools/srtrings.tools";
 import { CarModel } from "../schemas/car.schema";
 import { PostModel } from "../schemas/post.schema";
-import { PostTypeModel } from "../schemas/postType.schema";
 import { MultimediaModel } from "../schemas/multimedia.shcema";
 
 export const sequelize = new Sequelize({
@@ -15,22 +14,6 @@ export const sequelize = new Sequelize({
   port: DB_ENVIROMETS.port,
   database: DB_ENVIROMETS.database,
 });
-
-PostTypeModel.init(
-  {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: { notNull: { msg: "Es requerido el nombre" } },
-    },
-  },
-  {
-    sequelize,
-    tableName: StringsDB.postTypeTableName,
-    timestamps: true,
-  }
-);
 
 MultimediaModel.init(
   {
@@ -122,6 +105,11 @@ PostModel.init(
       allowNull: false,
       validate: { notNull: { msg: "Es requerido el títilo" } },
     },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: { notNull: { msg: "Es requerido el tipo de la publicación" } },
+    },
   },
   { sequelize, tableName: StringsDB.postTableName, timestamps: true }
 );
@@ -168,20 +156,11 @@ MultimediaModel.belongsToMany(PostModel, {
   foreignKey: StringsDB.multimediaForeignKeyName,
 });
 
-PostTypeModel.hasMany(PostModel, {
-  foreignKey: StringsDB.postTypeForeignKeyName,
-});
-PostModel.belongsTo(PostTypeModel, {
-  foreignKey: StringsDB.postTypeForeignKeyName,
-  as: StringsDB.typePostRelationName,
-});
-
 UserModel.hasMany(PostModel, {
   foreignKey: StringsDB.userForeignKeyName,
   as: StringsDB.postsRelationName,
 });
 PostModel.belongsTo(UserModel, {
   foreignKey: StringsDB.userForeignKeyName,
-  
   as: StringsDB.userRelationName,
 });
