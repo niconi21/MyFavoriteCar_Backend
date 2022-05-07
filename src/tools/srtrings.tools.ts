@@ -14,6 +14,8 @@ export class StringsApp {
 }
 
 export class StringsDB{
+
+  //Name's tables
   public static userTableName = 'User';
   public static carTableName = 'Car';
   public static postTableName = 'Post';
@@ -24,10 +26,21 @@ export class StringsDB{
   public static CarMultimediaTableName = "CarMultimedia";
   public static postMultimediaTableName = "PostMultimedia";
 
+  //Name's Foreign key
   public static userForeignKeyName = 'userId';
   public static friendForeignKeyName = 'friendId';
   public static carForeignKeyName = 'carId';
   public static multimediaForeignKeyName = 'multimediaId';
   public static postForeignKeyName = 'postId';
   public static postTypeForeignKeyName = 'typeId';
+
+  //Name's relations
+
+  public static postsRelationName = 'posts'
+  public static typePostRelationName = 'type'
+  public static userRelationName = 'user'
+  public static friendsRelationName = 'friends'
+  public static favoritesCarsRelationName = 'favoritesCars'
+  public static carMultimediasRelationName = 'carMultimedias'
+  
 }

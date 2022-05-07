@@ -1,4 +1,9 @@
+import { UserModel } from './user.schema';
+import { MultimediaModel } from './multimedia.shcema';
 import {
+  BelongsToManyCreateAssociationMixin,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManyRemoveAssociationMixin,
   CreationOptional,
   InferAttributes,
   InferCreationAttributes,
@@ -18,4 +23,13 @@ export class CarModel extends Model<
 
   public createdAt: CreationOptional<Date>;
   public updatedAt: CreationOptional<Date>;
+
+  
+  public getCarMultimedias!: BelongsToManyGetAssociationsMixin<MultimediaModel>;
+
+  public createCarMultimedia!: BelongsToManyCreateAssociationMixin<MultimediaModel>
+
+  public removeCarMultimedia!: BelongsToManyRemoveAssociationMixin<MultimediaModel, number>;
+
+
 }

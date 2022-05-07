@@ -9,6 +9,7 @@ import { StringsApp } from "../tools/srtrings.tools";
 import { sequelize } from "./app.database";
 import { UserModel } from "../schemas/user.schema";
 import { CarModel } from "../schemas/car.schema";
+import { PostModel } from '../schemas/post.schema';
 export class App {
   private _app: Application;
   private _port: string = APP_ENVIROMENTS.port;
@@ -39,45 +40,26 @@ export class App {
   }
 
   private async _connectedDB() {
-    await sequelize.authenticate();
-    await sequelize.sync({ alter: true });
-    console.log(magenta(StringsApp.dbMessageConnected));
-    this._prubasDB();
+    try {
+      await sequelize.authenticate();
+      await sequelize.sync({ force: true, logging: false });
+      console.log(magenta(StringsApp.dbMessageConnected));
+      await this._prubasDB();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   private async _prubasDB() {
-    // let user = new UserModel({
-    //   name: "Nicolas Moreno Durán",
-    //   email: "morenodurann@gmail.com",
-    //   password: "nodeisjs",
-    //   age: 21,
-    //   description: "holis",
-    // });
-    // await user.save();
-    // await CarModel.bulkCreate([
-    //   {
-    //     tradeMark: "audi",
-    //     model: 2018,
-    //     name: "R8",
-    //     description: "v6 32v 320hp",
-    //   },
-    //   {
-    //     tradeMark: "mazda",
-    //     model: 2017,
-    //     name: "mazda 3",
-    //     description: "v4 16v 210hp",
-    //   },
-    //   {
-    //     tradeMark: "hyundai",
-    //     model: 2014,
-    //     name: "I10",
-    //     description: "4 en linea, 12v 74hp",
-    //   },
-
-    // ]);
-    let user = await UserModel.findByPk(1);
-    
-    console.log(user?.get())
+    // await CarModel.create({
+    //   name: 'I10',
+    //   tradeMark: 'hyundai',
+    //   model: 2014,
+    //   description:'Liena 4c 1.1L'
+    // })
+    // let post = await PostModel.findByPk(4);
+    // let user = await post?.getType()
+    // console.log(user?.get())
   }
 
   public async listen() {

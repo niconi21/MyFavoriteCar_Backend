@@ -129,31 +129,34 @@ PostModel.init(
 UserModel.belongsToMany(CarModel, {
   through: StringsDB.favoriteCarTableName,
   foreignKey: StringsDB.userForeignKeyName,
+  as: StringsDB.favoritesCarsRelationName,
 });
 CarModel.belongsToMany(UserModel, {
   through: StringsDB.favoriteCarTableName,
   foreignKey: StringsDB.carForeignKeyName,
+  as: StringsDB.favoritesCarsRelationName,
 });
 
 UserModel.belongsToMany(UserModel, {
   through: StringsDB.friendsTableName,
   foreignKey: StringsDB.userForeignKeyName,
-  as: "user",
+  as: StringsDB.friendsRelationName,
 });
-
 UserModel.belongsToMany(UserModel, {
   through: StringsDB.friendsTableName,
   foreignKey: StringsDB.friendForeignKeyName,
-  as: "friend",
+  as: StringsDB.userRelationName,
 });
 
 CarModel.belongsToMany(MultimediaModel, {
   through: StringsDB.CarMultimediaTableName,
   foreignKey: StringsDB.carForeignKeyName,
+  as: StringsDB.carMultimediasRelationName,
 });
 MultimediaModel.belongsToMany(CarModel, {
   through: StringsDB.CarMultimediaTableName,
   foreignKey: StringsDB.multimediaForeignKeyName,
+  as: StringsDB.carMultimediasRelationName,
 });
 
 PostModel.belongsToMany(MultimediaModel, {
@@ -165,8 +168,20 @@ MultimediaModel.belongsToMany(PostModel, {
   foreignKey: StringsDB.multimediaForeignKeyName,
 });
 
-PostTypeModel.hasMany(PostModel, {foreignKey: StringsDB.postTypeForeignKeyName});
-PostModel.belongsTo(PostTypeModel, {foreignKey: StringsDB.postTypeForeignKeyName});
+PostTypeModel.hasMany(PostModel, {
+  foreignKey: StringsDB.postTypeForeignKeyName,
+});
+PostModel.belongsTo(PostTypeModel, {
+  foreignKey: StringsDB.postTypeForeignKeyName,
+  as: StringsDB.typePostRelationName,
+});
 
-UserModel.hasMany(PostModel, {foreignKey: StringsDB.userForeignKeyName});
-PostModel.belongsTo(UserModel, {foreignKey: StringsDB.userForeignKeyName});
+UserModel.hasMany(PostModel, {
+  foreignKey: StringsDB.userForeignKeyName,
+  as: StringsDB.postsRelationName,
+});
+PostModel.belongsTo(UserModel, {
+  foreignKey: StringsDB.userForeignKeyName,
+  
+  as: StringsDB.userRelationName,
+});

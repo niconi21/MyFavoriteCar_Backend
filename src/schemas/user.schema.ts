@@ -1,18 +1,16 @@
-import { PostModel } from './post.schema';
-import { CarModel } from './car.schema';
+import { PostModel } from "./post.schema";
+import { CarModel } from "./car.schema";
 import {
-  Association,
-  BelongsTo,
   BelongsToManyAddAssociationMixin,
+  BelongsToManyAddAssociationsMixin,
+  BelongsToManyCreateAssociationMixin,
   BelongsToManyGetAssociationsMixin,
-  BelongsToManySetAssociationsMixin,
+  BelongsToManyRemoveAssociationMixin,
   CreationOptional,
-  HasManyGetAssociationsMixin,
-  HasManySetAssociationsMixin,
+  HasManyAddAssociationMixin,
   InferAttributes,
   InferCreationAttributes,
   Model,
-  NonAttribute,
 } from "sequelize";
 
 export class UserModel extends Model<
@@ -30,17 +28,21 @@ export class UserModel extends Model<
   public createdAt: CreationOptional<Date>;
   public updatedAt: CreationOptional<Date>;
 
-  declare getPosts: HasManyGetAssociationsMixin<PostModel>;
-  declare getFavoriteCars: BelongsToManyGetAssociationsMixin<CarModel>;
-  declare getFriends: BelongsToManyGetAssociationsMixin<UserModel>;
+  public getFavoritesCars!: BelongsToManyGetAssociationsMixin<CarModel>;
+  public getFriends!: BelongsToManyGetAssociationsMixin<UserModel>;
+  public getPosts!: BelongsToManyGetAssociationsMixin<PostModel>;
 
-  declare setFavoriteCar: BelongsToManySetAssociationsMixin<CarModel, CarModel>
+  public addFavoritesCar!: BelongsToManyAddAssociationMixin<CarModel, number>;
+  public addFriend!: BelongsToManyAddAssociationMixin<UserModel, number>;
+  public addPost!: HasManyAddAssociationMixin<PostModel, number>;
 
-  declare myFriends?: NonAttribute<UserModel[]>;
-  declare myPosts?: NonAttribute<PostModel[]>;
-  declare FavoriteCar?: NonAttribute<CarModel[]>;
+  public createFavoritesCar!: BelongsToManyCreateAssociationMixin<CarModel>;
+  public createFriend!: BelongsToManyCreateAssociationMixin<UserModel>;
+  public createPost!: BelongsToManyCreateAssociationMixin<PostModel>;
 
-  declare static associations: {
-    FavoriteCar:Association<UserModel, CarModel>;
-  };
+  public removeFavoritesCar!: BelongsToManyRemoveAssociationMixin<CarModel, number>;
+  public removeFriend!: BelongsToManyRemoveAssociationMixin<UserModel, number>;
+  public removePost!: BelongsToManyRemoveAssociationMixin<PostModel, number>;
+
+  
 }
